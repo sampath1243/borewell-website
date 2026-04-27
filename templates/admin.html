@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel</title>
+</head>
+<body>
+
+<h2>Bookings Data</h2>
+
+<table border="1">
+<tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Phone</th>
+    <th>Type</th>
+    <th>Rigs</th>
+    <th>Feet</th>
+    <th>Work</th>
+    <th>Location</th>
+    <th>Date</th>
+    <th>Advance</th>
+</tr>
+
+{% for row in data %}
+<tr>
+    {% for col in row %}
+    <td>{{ col }}</td>
+    {% endfor %}
+</tr>
+{% endfor %}
+
+</table>
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Booking</title>
+</head>
+<body>
+
+<h2>Book Borewell</h2>
+
+<form action="/submit" method="POST">
+
+<input name="name" placeholder="Name" required><br><br>
+<input name="phone" placeholder="Phone" required><br><br>
+
+<select name="drilling_type">
+    <option>4½ inch</option>
+    <option>6½ inch</option>
+</select><br><br>
+
+<input name="rigs" placeholder="Rigs"><br><br>
+<input name="feet" placeholder="Feet"><br><br>
+
+<input name="work_type" placeholder="Work Type"><br><br>
+<input name="location" placeholder="Location"><br><br>
+<input type="datetime-local" name="date"><br><br>
+
+<input name="advance" placeholder="Advance"><br><br>
+
+<button type="submit">Submit</button>
+
+</form>
+
+<hr>
+
+<button onclick="payNow(500)">Pay ₹500 Advance</button>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+async function payNow(amount) {
+    const res = await fetch('/create-order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount: amount })
+    });
+
+    const order = await res.json();
+
+    const options = {
+        key: "YOUR_KEY",
+        amount: order.amount,
+        currency: "INR",
+        name: "Sri Yamuna Rock Drillers",
+        description: "Booking Payment",
+        order_id: order.id,
+        handler: function () {
+            alert("Payment Successful!");
+        }
+    };
+
+    const rzp = new Razorpay(options);
+    rzp.open();
+}
+</script>
+
+</body>
+</html>
